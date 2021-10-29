@@ -46,7 +46,8 @@ export const WebCamStream = () => {
 
     const noImage = "./no-image.png"
     const [imgSource, setImgSource] = useState(noImage);
-    const [color, setColor] = useState('BLUE');
+    const [solutionColor, setSolutionColor] = useState('BLUE');
+    const [recognizerColor, setRecognizerColor] = useState('NONE');
     const webcamRef = useRef<Webcam>(null);
     const [imgWidth, imgHeight] = [480, 360]
     const videoConstraints = {
@@ -63,7 +64,7 @@ export const WebCamStream = () => {
     useInterval(() => { 
         if(WebSocket.OPEN === socket.readyState && webcamRef.current) {
             const screenshot = webcamRef.current.getScreenshot()
-            const msg = JSON.stringify({ encodedImage: screenshot, color })
+            const msg = JSON.stringify({ encodedImage: screenshot, solutionColor, recognizerColor })
             console.debug("Message size: " + msg.length)
             socket.send(msg)
         } else if(WebSocket.CLOSED === socket.readyState) {
@@ -80,7 +81,15 @@ export const WebCamStream = () => {
             <div className="flex flex-wrap justify-center py-5 space-x-5">
                 {isConnected === true ? <div className="px-4 py-3 my-5 w-10 h-10 bg-green-600 rounded-full" /> : <div className="px-4 py-3 my-5 w-10 h-10 bg-red-600 rounded-full" />}
 
-                <select value={color} onChange={(e) => setColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                <select value={solutionColor} onChange={(e) => setSolutionColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                    <option value="NONE" className="text-black bg-white">None</option>
+                    <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
+                    <option value="GREEN" className="text-green-500 bg-white">Green</option>
+                    <option value="RED" className="text-red-500 bg-white">Red</option>
+                </select>
+
+                <select value={recognizerColor} onChange={(e) => setRecognizerColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                    <option value="NONE" className="text-black bg-white">None</option>
                     <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
                     <option value="GREEN" className="text-green-500 bg-white">Green</option>
                     <option value="RED" className="text-red-500 bg-white">Red</option>

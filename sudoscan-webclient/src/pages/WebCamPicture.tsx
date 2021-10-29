@@ -9,7 +9,8 @@ import { EngineInfoLabel } from "../components/EngineInfoLabel";
 export const WebCamPicture = () => {
     const noImage = "./no-image.png"
     const [imgSource, setImgSource] = useState(noImage);
-    const [color, setColor] = useState('BLUE');
+    const [solutionColor, setSolutionColor] = useState('BLUE');
+    const [recognizerColor, setRecognizerColor] = useState('NONE');
     const [processing, setProcessing] = useState(false);
     
     const [alert, setAlert] = useState("");
@@ -27,7 +28,7 @@ export const WebCamPicture = () => {
             setProcessing(true)
             const screenshot = webcamRef.current?.getScreenshot() || ""
             if(screenshot !== "") {
-                const res = await axios.post('/api/solve', { encodedImage: screenshot, color })
+                const res = await axios.post('/api/solve', { encodedImage: screenshot, solutionColor, recognizerColor })
                 setImgSource(res.data)
             }
         } catch ({ response: {data, status} }) {
@@ -53,7 +54,15 @@ export const WebCamPicture = () => {
             </div>
             
             <div className="flex flex-wrap justify-center py-5 space-x-5">
-                <select value={color} onChange={(e) => setColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+            <select value={solutionColor} onChange={(e) => setSolutionColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                    <option value="NONE" className="text-black bg-white">None</option>
+                    <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
+                    <option value="GREEN" className="text-green-500 bg-white">Green</option>
+                    <option value="RED" className="text-red-500 bg-white">Red</option>
+                </select>
+
+                <select value={recognizerColor} onChange={(e) => setRecognizerColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                    <option value="NONE" className="text-black bg-white">None</option>
                     <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
                     <option value="GREEN" className="text-green-500 bg-white">Green</option>
                     <option value="RED" className="text-red-500 bg-white">Red</option>

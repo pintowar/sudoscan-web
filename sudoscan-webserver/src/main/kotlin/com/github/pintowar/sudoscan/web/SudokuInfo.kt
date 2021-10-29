@@ -6,7 +6,7 @@ import java.awt.Color
 import java.util.*
 
 @Introspected
-data class SudokuInfo(val encodedImage: String, val color: String) {
+data class SudokuInfo(val encodedImage: String, val solutionColor: String, val recognizerColor: String) {
     private val template = "data:image/(.*);base64,"
     private val groups = Regex("^$template(.*)").find(encodedImage)?.groupValues
     private val type =
@@ -28,5 +28,10 @@ data class SudokuInfo(val encodedImage: String, val color: String) {
         else -> ".$type"
     }
 
-    fun awtColor(): Color = ColorFactory.valueOf(color)
+    private fun fontColor(value: String) =
+        if ("none" == value.lowercase()) ColorFactory.web("white", 0.0) else ColorFactory.valueOf(value)
+
+    fun solutionColor(): Color = fontColor(solutionColor)
+
+    fun recognizerColor(): Color = fontColor(recognizerColor)
 }
