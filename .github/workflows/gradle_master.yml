@@ -1,0 +1,111 @@
+name: SudoScan Master CI
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:
+      # Push events on master branch
+      - master
+jobs:
+  gradle_test:
+    name: Gradle Test on master
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Seting up Git
+        run: git config user.email "${{ github.actor }}@users.noreply.github.com" && git config user.name "Github Actions"
+
+      - name: Setting up JAVA
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Running gradle task
+        uses: eskatos/gradle-command-action@v1
+        with:
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
+          gradle-version: wrapper
+          arguments: -Pweb-cli clean assembleWebApp
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: sudoscan_web_jars
+          path: build/*.jar
+
+  gradle_build:
+    name: Gradle Build on master
+    runs-on: ubuntu-latest
+    needs: gradle_test
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Seting up Git
+        run: git config user.email "${{ github.actor }}@users.noreply.github.com" && git config user.name "Github Actions"
+
+      - name: Setting up JAVA
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Running gradle task
+        uses: eskatos/gradle-command-action@v1
+        env:
+          DOCKER_USER: ${{ secrets.JFROG_USER }}
+          DOCKER_PASS: ${{ secrets.JFROG_PASS }}
+        with:
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
+          gradle-version: wrapper
+          arguments: -Pweb-cli clean release dockerPushNative -x test -Prelease.useAutomaticVersion=true
+
+  release:
+    name: Create Release Tag
+    runs-on: ubuntu-latest
+    needs: gradle_build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get_latest_tag
+        run: |
+          LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+          echo "::set-output name=latest_tag::$LATEST_TAG"
+
+      - name: Last Release
+        id: last_release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: ${{ github.repository }}
+          excludes: prerelease,draft
+
+      - name: Download compressed sources from artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: sudoscan_web_jars
+          path: binaries/
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: steps.get_latest_tag.outputs.latest_tag != steps.last_release.outputs.release
+        with:
+          repository: ${{ github.repository }}
+          tag_name: ${{ steps.get_latest_tag.outputs.latest_tag }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            binaries/*.jar

@@ -1,5 +1,10 @@
 # SudoScan Web
+![master status](https://github.com/pintowar/sudoscan-web/actions/workflows/gradle_master.yml/badge.svg?branch=master)
 
+![develop status](https://github.com/pintowar/sudoscan-web/actions/workflows/gradle_develop.yml/badge.svg?branch=develop)
+
+![GitHub tag (latest)](https://img.shields.io/github/v/tag/pintowar/sudoscan-web)
+![GitHub license](https://img.shields.io/github/license/pintowar/sudoscan-web)
 Scan and Solve Sudoku Puzzles Web Version
 
 ## Project Info

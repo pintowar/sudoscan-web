@@ -9,33 +9,6 @@ allprojects {
 }
 
 tasks {
-    register<JacocoReport>("codeCoverageReport") {
-        group = "verification"
-        description = "Run tests and merge all jacoco reports"
-
-        val codeCoverageTask = this
-        // If a subproject applies the 'jacoco' plugin, add the result it to the report
-        subprojects {
-            val subproject = this
-            subproject.plugins.withType<JacocoPlugin>().configureEach {
-                val extensions = subproject.tasks.matching { it.extensions.findByType<JacocoTaskExtension>() != null }
-                extensions.forEach { codeCoverageTask.dependsOn(it) }
-
-                extensions.configureEach {
-                    val testTask = this
-                    sourceSets(subproject.sourceSets.main.get())
-                    executionData(testTask)
-                }
-            }
-        }
-
-        reports {
-            xml.required.set(true)
-            html.required.set(true)
-            csv.required.set(true)
-        }
-    }
-
     register("stage") {
         dependsOn(":sudoscan-webserver:shadowJar")
         group = "build"
@@ -53,7 +26,7 @@ tasks {
     }
 
     register("assembleWebApp") {
-        dependsOn(":sudoscan-webserver:build")
+        dependsOn(":sudoscan-webserver:shadowJar")
         group = "build"
         description = "Build web app"
         doLast {

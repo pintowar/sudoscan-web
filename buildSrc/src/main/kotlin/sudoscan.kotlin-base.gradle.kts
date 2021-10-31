@@ -5,7 +5,6 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka")
     id("io.kotest")
-    id("jacoco")
     id("idea")
     id("org.jlleitschuh.gradle.ktlint")
 }
@@ -74,10 +73,5 @@ tasks {
 
     test {
         useJUnitPlatform()
-        finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-    }
-
-    jacocoTestReport {
-        dependsOn(tasks.test) // tests are required to run before generating the report
     }
 }
