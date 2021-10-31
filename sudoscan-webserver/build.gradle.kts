@@ -7,7 +7,6 @@ plugins {
     id("sudoscan.kotlin-app")
     id("io.micronaut.application")
     id("com.github.johnrengelman.shadow")
-//    id("com.google.cloud.tools.jib") version "2.8.0"
 }
 
 description = "Sudoscan Web Server"
@@ -39,6 +38,23 @@ tasks {
         graalVersion.set("21.2.0")
     }
 
+    val imagesTags = listOf(
+        "pintowar/sudoscan-web:$version",
+        "pintowar/sudoscan-web:latest"
+    )
+
+    dockerBuildNative {
+        images.set(imagesTags)
+    }
+
+    dockerPushNative {
+        images.set(imagesTags)
+        registryCredentials {
+            username.set(project.findProperty("docker.user")?.toString() ?: System.getenv("DOCKER_USER"))
+            password.set(project.findProperty("docker.pass")?.toString() ?: System.getenv("DOCKER_PASS"))
+        }
+    }
+
     if (project.hasProperty("web-cli")) {
         processResources {
             dependsOn(":copyClientResources")
@@ -56,12 +72,6 @@ tasks {
             }
         }
     }
-
-//    jib {
-//        to {
-//            image = "gcr.io/myapp/jib-image"
-//        }
-//    }
 }
 
 val hasDjl = project.hasProperty("djl")

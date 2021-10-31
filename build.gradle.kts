@@ -86,6 +86,5 @@ release {
 
     git {
         requireBranch = "master"
-        signTag = true
     }
 }
