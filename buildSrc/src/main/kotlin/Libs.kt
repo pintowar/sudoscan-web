@@ -31,8 +31,6 @@ object Libs {
     object Micronaut {
         const val openApi = "io.micronaut.openapi:micronaut-openapi"
 
-        const val micronautPicocli = "io.micronaut.picocli:micronaut-picocli"
-
         const val swagger = "io.swagger.core.v3:swagger-annotations"
         const val kotlinJackson = "com.fasterxml.jackson.module:jackson-module-kotlin"
         const val annotationApi = "javax.annotation:javax.annotation-api"
@@ -65,11 +63,12 @@ object Libs {
         private const val vSudoscan = "0.9.1"
 
         const val sudoscanSolverChoco = "com.github.pintowar:sudoscan-solver-choco:$vSudoscan"
+        const val sudoscanSolverOjalgo = "com.github.pintowar:sudoscan-solver-ojalgo:$vSudoscan"
         const val sudoscanRecognizerDjl = "com.github.pintowar:sudoscan-recognizer-djl:$vSudoscan"
         const val sudoscanRecognizerDl4j = "com.github.pintowar:sudoscan-recognizer-dl4j:$vSudoscan"
 
-        fun DependencyHandler.implementSudoscan(isDjl: Boolean) {
-            add("implementation", sudoscanSolverChoco)
+        fun DependencyHandler.implementSudoscan(isDjl: Boolean, isOjalgo: Boolean) {
+            add("implementation", if (isOjalgo) sudoscanSolverOjalgo else sudoscanSolverChoco)
             add("implementation", if (isDjl) sudoscanRecognizerDjl else sudoscanRecognizerDl4j)
         }
     }
