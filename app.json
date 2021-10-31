@@ -5,6 +5,12 @@
   ],
   "website": "https://github.com/pintowar/sudoscan-web/",
   "repository": "https://github.com/pintowar/sudoscan-web",
+  "env": {
+    "GRADLE_TASK": {
+      "description": "Main gradle task to run on deployment.",
+      "value": "stage -Pweb-cli"
+    }
+  },
   "addons": [
   ],
   "buildpacks": [

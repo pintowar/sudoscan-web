@@ -37,7 +37,19 @@ tasks {
     }
 
     register("stage") {
-        dependsOn("clean", "assembleWebApp")
+        dependsOn(":sudoscan-webserver:shadowJar")
+        group = "build"
+        description = "Heroku task"
+        doLast {
+            val finalJar = "sudoscan-webserver-app-linux-x86_64-all.jar"
+            ant.withGroovyBuilder {
+                "move"(
+                    "file" to "${project(":sudoscan-webserver").buildDir}/libs/$finalJar",
+                    "todir" to "$rootDir/build/"
+                )
+            }
+            delete("${project(":sudoscan-webclient").projectDir}/node_modules")
+        }
     }
 
     register("assembleWebApp") {
