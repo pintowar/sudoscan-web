@@ -61,8 +61,8 @@ jobs:
       - name: Running gradle task
         uses: eskatos/gradle-command-action@v1
         env:
-          DOCKER_USER: ${{ secrets.JFROG_USER }}
-          DOCKER_PASS: ${{ secrets.JFROG_PASS }}
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
         with:
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
