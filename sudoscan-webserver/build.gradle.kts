@@ -22,9 +22,17 @@ micronaut {
 }
 
 tasks {
+    val platform = project.properties["javacppPlatform"] ?: "multi"
+    val baseName = "${project.name}-app-$platform"
+
     nativeImage {
         args("--verbose")
-        imageName.set("sudoscan-web-server")
+        imageName.set(baseName)
+    }
+
+    shadowJar {
+        archiveFileName.set("$baseName-all.${archiveExtension.get()}")
+        mergeServiceFiles()
     }
 
     dockerfileNative {
