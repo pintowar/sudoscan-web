@@ -1,0 +1,12 @@
+{
+  "name": "Sudoscan Web",
+  "description": "Sudoscan web version",
+  "keywords": [
+  ],
+  "website": "https://github.com/pintowar/sudoscan-web/",
+  "repository": "https://github.com/pintowar/sudoscan-web",
+  "addons": [
+  ],
+  "buildpacks": [
+  ]
+}

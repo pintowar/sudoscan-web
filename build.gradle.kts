@@ -36,6 +36,10 @@ tasks {
         }
     }
 
+    register("stage") {
+        dependsOn("clean", "assembleWebApp")
+    }
+
     register("assembleWebApp") {
         dependsOn(":sudoscan-webserver:build")
         group = "build"
