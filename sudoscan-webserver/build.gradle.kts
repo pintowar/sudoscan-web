@@ -75,8 +75,9 @@ tasks {
 }
 
 val hasDjl = project.hasProperty("djl")
+val hasOjalgo = project.hasProperty("ojalgo")
 dependencies {
-    implementSudoscan(hasDjl)
+    implementSudoscan(hasDjl, hasOjalgo)
     implementMicronautWeb()
 
     implementAwtColorFactory()
