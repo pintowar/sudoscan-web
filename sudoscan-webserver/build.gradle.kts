@@ -1,6 +1,7 @@
 import Libs.AwtColorFactory.implementAwtColorFactory
 import Libs.Micronaut.implementMicronautWeb
 import Libs.Sudoscan.implementSudoscan
+import groovy.json.JsonOutput
 
 plugins {
     id("sudoscan.kotlin-app")
@@ -22,13 +23,29 @@ micronaut {
 
 tasks {
     nativeImage {
-        args("--verbose", "-H:IncludeResources=\"logback.xml|application.yml|public/*.*\"")
+        args("--verbose")
         imageName.set("sudoscan-web-server")
     }
 
-    processResources {
-        if (project.hasProperty("web-cli")) {
+    dockerfileNative {
+        graalVersion.set("21.2.0")
+    }
+
+    if (project.hasProperty("web-cli")) {
+        processResources {
             dependsOn(":copyClientResources")
+        }
+
+        generateResourceConfigFile {
+            val resourceConfig = this.outputDirectory.file("resource-config.json").get().asFile
+            doLast {
+                val content = groovy.json.JsonSlurper().parseText(resourceConfig.readText()) as Map<*, *>
+                val webCliAssets = mapOf("pattern" to "public/*.*")
+                val newContent = mapOf("resources" to (content["resources"] as List<*>) + webCliAssets)
+                resourceConfig.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(newContent)))
+
+                logger.quiet("adding cli assets to resource-config.json")
+            }
         }
     }
 
