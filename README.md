@@ -12,7 +12,7 @@ AI libs and CI pipes (using github actions).
 
 To get your own Sudoscan Web App running on Heroku, click the button below:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/pintowar/superset-on-heroku)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/pintowar/sudoscan-web)
 
 Fill out the form, and later you should be performing analytics at the speed of thought.
 
