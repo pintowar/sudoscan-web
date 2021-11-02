@@ -9,6 +9,10 @@ Scan and Solve Sudoku Puzzles Web Version
 
 ## Project Info
 
+This is a web version of the [Sudoscan Project](https://github.com/pintowar/sudoscan).
+The main engine uses Sudoscan's libs on the server side while a Typescript/React client uses webcam + websockets 
+to solve Sudoku Puzzles given a Puzzle image.  
+
 This is a toy project for educational purpose.
 I usually use this project to explore some JVM/Kotlin libs, new Gradle features/plugins,
 AI libs and CI pipes (using github actions).

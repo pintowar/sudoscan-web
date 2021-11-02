@@ -20,6 +20,12 @@ export const About = () => {
                                 alt="Choco Solver" title="Choco Solver" style={imgStyle} className="object-scale-down"/>
                         </a>
                     </li>
+                    <li>
+                        <a href="https://www.ojalgo.org/" target="_blank" rel="noreferrer">
+                            <img src="https://www.ojalgo.org/wp-content/uploads/2019/03/oj3-768x760.png" 
+                                alt="OjAlgo" title="OjAlgo" style={imgStyle} className="object-scale-down"/>
+                        </a>
+                    </li>
                 </ul>
         
                 <h2 className="text-3xl leading-normal">Recognizers</h2>
