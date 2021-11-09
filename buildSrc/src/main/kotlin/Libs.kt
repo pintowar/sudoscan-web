@@ -60,7 +60,7 @@ object Libs {
     }
 
     object Sudoscan {
-        private const val vSudoscan = "0.9.1"
+        private const val vSudoscan = "0.9.3"
 
         const val sudoscanSolverChoco = "com.github.pintowar:sudoscan-solver-choco:$vSudoscan"
         const val sudoscanSolverOjalgo = "com.github.pintowar:sudoscan-solver-ojalgo:$vSudoscan"
