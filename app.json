@@ -8,7 +8,7 @@
   "env": {
     "GRADLE_TASK": {
       "description": "Main gradle task to run on deployment.",
-      "value": "stage -Pweb-cli"
+      "value": "-Pweb-cli clean stage"
     }
   },
   "addons": [
