@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaPen, FaCamera, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaPen, FaCamera, FaPlus, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
 import Webcam from "react-webcam";
 import axios from 'axios';
 
@@ -67,17 +67,18 @@ export const WebCamPicture = () => {
     return (
         <div className="flex flex-1 h-full">
 
-            <aside id="sidebar" className="bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block py-16" style={{ display: 'block' }}>
+            <aside id="sidebar" className="bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block py-16 overflow-y-auto" style={{ display: 'block' }}>
+
+                <div className="w-full py-3 px-2 border-b border-light-border bg-white flex relative">
+                    <FaImages className="h-6 w-6"/>
+                    <span className="ml-2">Pictures</span>
+
+                    <button onClick={clean} className="inline-block p-1 mr-2 absolute right-0 shadow ripple hover:shadow-lg bg-gray-600 hover:bg-gray-800 rounded-full text-center text-white font-bold waves-effect">
+                        <FaPlus />
+                    </button>
+                </div>
 
                 <ul className="list-reset flex flex-col">
-                    <li className=" w-full h-full py-3 px-2 border-b border-light-border bg-white flex relative">
-                        <FaImages className="h-6 w-6"/>
-                        <span className="ml-2">Pictures</span>
-
-                        <button onClick={clean} className="inline-block px-1 mr-2 absolute right-0 shadow ripple hover:shadow-lg bg-gray-600 hover:bg-gray-800 rounded-full text-center text-white font-bold waves-effect">
-                            <span >+</span>
-                        </button>
-                    </li>
                     {sampleImages.map((src, idx) => 
                         <li key={idx} className="my-1 border-2 relative">
                             <button onClick={() => removeSample(idx)} className="px-2 py-1 my-1 absolute right-0 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex">
