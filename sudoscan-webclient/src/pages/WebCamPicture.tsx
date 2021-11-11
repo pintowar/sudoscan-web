@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { FaPen, FaCamera, FaPlus, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
-import Webcam from "react-webcam";
+import { FaPen, FaPlus, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
 import axios from 'axios';
 
+import { ModalCapture } from "../components/ModalCapture";
 import { AlertMessage } from "../components/AlertMessage";
 import { EngineInfoLabel } from "../components/EngineInfoLabel";
 
@@ -13,6 +13,7 @@ export const WebCamPicture = () => {
     const [recognizerColor, setRecognizerColor] = useState('NONE');
     const [processing, setProcessing] = useState(false);
     const [sampleImages, setSampleImages] = useState<string[]>([]);
+    const [showModal, setShowModal] = useState(false);
     
     const [alert, setAlert] = useState("");
     
@@ -36,7 +37,7 @@ export const WebCamPicture = () => {
     useEffect(() => {
         const initSample  = ["./sudoku01.jpg", "./sudoku02.jpg"];
         Promise.all(initSample.map(base64Image)).then(img =>
-            setSampleImages(sampleImages.concat(img))
+            setSampleImages(prev => prev.concat(img))
         )
     }, []);
 
@@ -64,6 +65,10 @@ export const WebCamPicture = () => {
         setSampleImages(copy);
     }
 
+    const grapImage = (src: string) => {
+        setSampleImages(sampleImages.concat(src));
+    }
+
     return (
         <div className="flex flex-1 h-full">
 
@@ -73,7 +78,7 @@ export const WebCamPicture = () => {
                     <FaImages className="h-6 w-6"/>
                     <span className="ml-2">Pictures</span>
 
-                    <button onClick={clean} className="inline-block p-1 mr-2 absolute right-0 shadow ripple hover:shadow-lg bg-gray-600 hover:bg-gray-800 rounded-full text-center text-white font-bold waves-effect">
+                    <button onClick={() => setShowModal(true)} className="inline-block p-1 mr-2 absolute right-0 shadow ripple hover:shadow-lg bg-gray-600 hover:bg-gray-800 rounded-full text-center text-white font-bold waves-effect">
                         <FaPlus />
                     </button>
                 </div>
@@ -101,6 +106,8 @@ export const WebCamPicture = () => {
                 <div className="flex flex-col">
 
                     { alert && <AlertMessage message={alert} setMessage={setAlert} /> }
+
+                    <ModalCapture show={showModal} onCapture={grapImage} onClose={() => setShowModal(!showModal)}/>
 
                     <EngineInfoLabel/>
 
