@@ -1,5 +1,5 @@
 import { About } from './pages/About'
-import { WebCamPicture } from './pages/WebCamPicture'
+import { PictureUploader } from './pages/PictureUploader'
 import { WebCamStream } from './pages/WebCamStream'
 import { NavMenu } from './components/NavMenu'
 import {
@@ -15,10 +15,10 @@ function App() {
         <NavMenu />
         <Switch>
             <Route exact path="/">
-              <WebCamStream/>
+              <PictureUploader/>
             </Route>
             <Route path="/picture">
-              <WebCamPicture/>
+              <PictureUploader/>
             </Route>
             <Route path="/stream">
               <WebCamStream/>

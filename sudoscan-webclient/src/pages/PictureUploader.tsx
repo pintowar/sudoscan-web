@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { urlToBase64Image } from "../utils/images";
 import { FaPen, FaPlus, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -6,7 +7,7 @@ import { ModalCapture } from "../components/ModalCapture";
 import { AlertMessage } from "../components/AlertMessage";
 import { EngineInfoLabel } from "../components/EngineInfoLabel";
 
-export const WebCamPicture = () => {
+export const PictureUploader = () => {
     const noImage = "./no-image.png"
     const [imgSource, setImgSource] = useState(noImage);
     const [solutionColor, setSolutionColor] = useState('BLUE');
@@ -21,22 +22,9 @@ export const WebCamPicture = () => {
     
     const imgStyle = {width: `${imgWidth}px`, height: `${imgHeight}px`}
 
-    const base64Image = async (url: string) => {
-        const data = await fetch(url);
-        const blob = await data.blob();
-        return new Promise<string>((resolve) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(blob); 
-            reader.onloadend = () => {
-                const base64data = reader.result;   
-                resolve(`${base64data}`);
-            }
-        });
-    }
-
     useEffect(() => {
         const initSample  = ["./sudoku01.jpg", "./sudoku02.jpg"];
-        Promise.all(initSample.map(base64Image)).then(img =>
+        Promise.all(initSample.map(urlToBase64Image)).then(img =>
             setSampleImages(prev => prev.concat(img))
         )
     }, []);
@@ -48,7 +36,7 @@ export const WebCamPicture = () => {
     const solve = async () => {
         try {
             setProcessing(true)
-            if(imgSource !== noImage) {
+            if(imgSource && imgSource !== noImage) {
                 const res = await axios.post('/api/solve', { encodedImage: imgSource, solutionColor, recognizerColor })
                 setImgSource(res.data)
             }
@@ -92,7 +80,7 @@ export const WebCamPicture = () => {
                             <button onClick={() => setImgSource(src)} className="px-2 py-1 my-8 absolute right-0 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex">
                                 <FaArrowAltCircleRight className="h-3 w-3"/>
                             </button>
-                            <img src={src} alt="Dbl Click" className="w-full h-48" />
+                            <img src={src} alt="Solvable" className="w-full h-48" />
                         </li>
                     )
                     }
@@ -116,30 +104,43 @@ export const WebCamPicture = () => {
                     </div>
 
                     <div className="flex flex-wrap justify-center py-5 space-x-5">
-                    <select value={solutionColor} onChange={(e) => setSolutionColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
-                            <option value="NONE" className="text-black bg-white">None</option>
-                            <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
-                            <option value="GREEN" className="text-green-500 bg-white">Green</option>
-                            <option value="RED" className="text-red-500 bg-white">Red</option>
-                        </select>
+                        <div className="flex flex-col">
+                            <label htmlFor="solutionColor">Solution</label>
+                            <select id="solutionColor" value={solutionColor} onChange={(e) => setSolutionColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                                <option value="NONE" className="text-black bg-white">None</option>
+                                <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
+                                <option value="GREEN" className="text-green-500 bg-white">Green</option>
+                                <option value="RED" className="text-red-500 bg-white">Red</option>
+                            </select>
+                        </div>
 
-                        <select value={recognizerColor} onChange={(e) => setRecognizerColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
-                            <option value="NONE" className="text-black bg-white">None</option>
-                            <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
-                            <option value="GREEN" className="text-green-500 bg-white">Green</option>
-                            <option value="RED" className="text-red-500 bg-white">Red</option>
-                        </select>
+                        <div className="flex flex-col">
+                            <label htmlFor="recognizerColor">Recognizer</label>
+                            <select id="recognizerColor" value={recognizerColor} onChange={(e) => setRecognizerColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                                <option value="NONE" className="text-black bg-white">None</option>
+                                <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
+                                <option value="GREEN" className="text-green-500 bg-white">Green</option>
+                                <option value="RED" className="text-red-500 bg-white">Red</option>
+                            </select>
+                        </div>
 
-                        <button disabled={processing} onClick={solve} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex">
-                            <FaPen className="h-6 w-6"/>
-                            <span className="ml-2">Solve</span>
-                        </button>
+                        <div className="flex flex-col-reverse">
+                            <button disabled={processing} onClick={solve} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex">
+                                <FaPen className="h-5 w-5"/>
+                                <span className="ml-2">Solve</span>
+                            </button>
+                        </div>
 
-                        <button disabled={processing} onClick={clean} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex">
-                            <FaTrashAlt className="h-6 w-6"/>
-                            <span className="ml-2">Clean</span>
-                        </button>
-                        {processing && <div className="px-4 py-3 my-5 w-12 h-12 border-4 border-gray-600 rounded-full loader" />}
+                        <div className="flex flex-col-reverse">
+                            <button disabled={processing} onClick={clean} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex">
+                                <FaTrashAlt className="h-5 w-5"/>
+                                <span className="ml-2">Clean</span>
+                            </button>
+                        </div>
+
+                        <div className="flex flex-col-reverse">
+                            {processing && <div className="px-4 py-3 my-5 w-12 h-12 border-4 border-gray-600 rounded-full loader" />}
+                        </div>
 
                     </div> 
                     
