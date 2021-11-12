@@ -64,9 +64,11 @@ export const WebCamStream = () => {
     useInterval(() => { 
         if(WebSocket.OPEN === socket.readyState && webcamRef.current) {
             const screenshot = webcamRef.current.getScreenshot()
-            const msg = JSON.stringify({ encodedImage: screenshot, solutionColor, recognizerColor })
-            console.debug("Message size: " + msg.length)
-            socket.send(msg)
+            if(screenshot) {
+                const msg = JSON.stringify({ encodedImage: screenshot, solutionColor, recognizerColor })
+                console.debug("Message size: " + msg.length)
+                socket.send(msg)
+            }
         } else if(WebSocket.CLOSED === socket.readyState) {
             console.debug("Reconnecting...")
             setupSocket()
@@ -79,21 +81,29 @@ export const WebCamStream = () => {
             <EngineInfoLabel/>
 
             <div className="flex flex-wrap justify-center py-5 space-x-5">
-                {isConnected === true ? <div className="px-4 py-3 my-5 w-10 h-10 bg-green-600 rounded-full" /> : <div className="px-4 py-3 my-5 w-10 h-10 bg-red-600 rounded-full" />}
+                <div className="flex flex-col-reverse">
+                    {isConnected === true ? <div className="px-4 py-3 my-5 w-10 h-10 bg-green-600 rounded-full" /> : <div className="px-4 py-3 my-5 w-10 h-10 bg-red-600 rounded-full" />}
+                </div>
 
-                <select value={solutionColor} onChange={(e) => setSolutionColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
-                    <option value="NONE" className="text-black bg-white">None</option>
-                    <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
-                    <option value="GREEN" className="text-green-500 bg-white">Green</option>
-                    <option value="RED" className="text-red-500 bg-white">Red</option>
-                </select>
+                <div className="flex flex-col">
+                    <label htmlFor="solutionColor">Solution</label>
+                    <select id="solutionColor" value={solutionColor} onChange={(e) => setSolutionColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                        <option value="NONE" className="text-black bg-white">None</option>
+                        <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
+                        <option value="GREEN" className="text-green-500 bg-white">Green</option>
+                        <option value="RED" className="text-red-500 bg-white">Red</option>
+                    </select>
+                </div>
 
-                <select value={recognizerColor} onChange={(e) => setRecognizerColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
-                    <option value="NONE" className="text-black bg-white">None</option>
-                    <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
-                    <option value="GREEN" className="text-green-500 bg-white">Green</option>
-                    <option value="RED" className="text-red-500 bg-white">Red</option>
-                </select>
+                <div className="flex flex-col">
+                    <label htmlFor="recognizerColor">Recognizer</label>
+                    <select id="recognizerColor" value={recognizerColor} onChange={(e) => setRecognizerColor(e.target.value)} className="px-4 py-3 my-5 bg-gray-600 hover:bg-gray-800 rounded-full text-white font-bold flex" >
+                        <option value="NONE" className="text-black bg-white">None</option>
+                        <option value="BLUE" className="text-blue-500 bg-white">Blue</option>
+                        <option value="GREEN" className="text-green-500 bg-white">Green</option>
+                        <option value="RED" className="text-red-500 bg-white">Red</option>
+                    </select>
+                </div>
             </div>
 
             <div className="flex flex-wrap justify-center space-x-5 pt-4">
