@@ -15,12 +15,14 @@ tasks {
         description = "Heroku task"
         doLast {
             val finalJar = "sudoscan-webserver-app-linux-x86_64-all.jar"
+            val origin = "${project(":sudoscan-webserver").buildDir}/libs/$finalJar"
             ant.withGroovyBuilder {
                 "move"(
-                    "file" to "${project(":sudoscan-webserver").buildDir}/libs/$finalJar",
+                    "file" to origin,
                     "todir" to "$rootDir/build/"
                 )
             }
+            logger.quiet("Cli Resources: move file $origin to $rootDir/build/")
             delete("${project(":sudoscan-webclient").projectDir}/node_modules")
         }
     }
