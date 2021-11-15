@@ -6,7 +6,9 @@ import java.awt.Color
 import java.util.*
 
 @Introspected
-data class SudokuInfo(val encodedImage: String, val solutionColor: String, val recognizerColor: String) {
+data class SudokuInfo(
+    val encodedImage: String, val solutionColor: String, val recognizerColor: String, val debug: Boolean = false
+) {
     private val template = "data:image/(.*);base64,"
     private val groups = Regex("^$template(.*)").find(encodedImage)?.groupValues
     private val type =

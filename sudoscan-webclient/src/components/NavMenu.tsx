@@ -35,10 +35,10 @@ export const NavMenu = () => {
                         <div className="block ml-4">
                             <div className="flex space-x-2 py-2 text-white font-medium">
                                 <span className="px-2">
-                                    <Link to="/stream">Stream</Link>
+                                    <Link to="/picture">Picture</Link>
                                 </span>
                                 <span className="px-2">
-                                    <Link to="/picture">Picture</Link>
+                                    <Link to="/stream">Stream</Link>
                                 </span>
                                 <span className="px-2">
                                     <Link to="/about">About</Link>

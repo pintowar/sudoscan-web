@@ -15,8 +15,9 @@ class SudokuService : KLogging() {
 
     fun solve(sudoku: SudokuInfo): String {
         val bytes = sudoku.decode()
+        val debugScale = if (sudoku.debug) 1.5 else 1.0
         val sol = engine.solveAndCombineSolution(
-            bytes, sudoku.solutionColor(), sudoku.recognizerColor(), sudoku.extension()
+            bytes, sudoku.solutionColor(), sudoku.recognizerColor(), sudoku.extension(), debugScale
         )
         return sudoku.encode(sol)
     }
