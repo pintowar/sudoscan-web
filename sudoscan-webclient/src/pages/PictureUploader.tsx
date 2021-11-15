@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { urlToBase64Image } from "../utils/images";
-import { FaPen, FaPlus, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaBug, FaPen, FaPlus, FaTrashAlt, FaImages, FaArrowAltCircleRight } from 'react-icons/fa';
 import axios from 'axios';
 
 import { ModalCapture } from "../components/ModalCapture";
@@ -12,6 +12,7 @@ export const PictureUploader = () => {
     const [imgSource, setImgSource] = useState(noImage);
     const [solutionColor, setSolutionColor] = useState('BLUE');
     const [recognizerColor, setRecognizerColor] = useState('NONE');
+    const [debug, setDebug] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [sampleImages, setSampleImages] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
@@ -20,7 +21,7 @@ export const PictureUploader = () => {
     
     const [imgWidth, imgHeight] = [480, 360]
     
-    const imgStyle = {width: `${imgWidth}px`, height: `${imgHeight}px`}
+    const [imgStyle, setImgStyle] = useState({width: `${imgWidth}px`, height: `${imgHeight}px`})
 
     useEffect(() => {
         const initSample  = ["./sudoku01.jpg", "./sudoku02.jpg"];
@@ -37,7 +38,7 @@ export const PictureUploader = () => {
         try {
             setProcessing(true)
             if(imgSource && imgSource !== noImage) {
-                const res = await axios.post('/api/solve', { encodedImage: imgSource, solutionColor, recognizerColor })
+                const res = await axios.post('/api/solve', { encodedImage: imgSource, solutionColor, recognizerColor, debug })
                 setImgSource(res.data)
             }
         } catch ({ response: {data, status} }) {
@@ -55,6 +56,12 @@ export const PictureUploader = () => {
 
     const grapImage = (src: string) => {
         setSampleImages(sampleImages.concat(src));
+    }
+
+    const switchDebug = () => {
+        const scale = debug ? 1.0 : 1.5
+        setImgStyle({width: `${scale * imgWidth}px`, height: `${scale * imgHeight}px`})
+        setDebug(!debug)
     }
 
     return (
@@ -122,6 +129,13 @@ export const PictureUploader = () => {
                                 <option value="GREEN" className="text-green-500 bg-white">Green</option>
                                 <option value="RED" className="text-red-500 bg-white">Red</option>
                             </select>
+                        </div>
+
+                        <div className="flex flex-col-reverse">
+                            <button disabled={processing} onClick={switchDebug} className={`px-4 py-3 my-5 ${debug ? "bg-gray-900" : "bg-gray-600"} hover:bg-gray-800 rounded-full text-white font-bold flex`}>
+                                <FaBug className="h-5 w-5"/>
+                                <span className="ml-2">Debug</span>
+                            </button>
                         </div>
 
                         <div className="flex flex-col-reverse">
