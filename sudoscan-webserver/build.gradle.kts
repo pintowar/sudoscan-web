@@ -24,9 +24,13 @@ tasks {
     val platform = project.properties["javacppPlatform"] ?: "multi"
     val baseName = "${project.name}-app-$platform"
 
-    nativeImage {
-        args("--verbose")
-        imageName.set(baseName)
+    graalvmNative {
+        binaries {
+            named("main") {
+                buildArgs("--verbose")
+                imageName.set(baseName)
+            }
+        }
     }
 
     shadowJar {
@@ -58,18 +62,6 @@ tasks {
     if (project.hasProperty("web-cli")) {
         processResources {
             dependsOn(":copyClientResources")
-        }
-
-        generateResourceConfigFile {
-            val resourceConfig = this.outputDirectory.file("resource-config.json").get().asFile
-            doLast {
-                val content = groovy.json.JsonSlurper().parseText(resourceConfig.readText()) as Map<*, *>
-                val webCliAssets = mapOf("pattern" to "public/*.*")
-                val newContent = mapOf("resources" to (content["resources"] as List<*>) + webCliAssets)
-                resourceConfig.writeText(JsonOutput.prettyPrint(JsonOutput.toJson(newContent)))
-
-                logger.quiet("adding cli assets to resource-config.json")
-            }
         }
     }
 }

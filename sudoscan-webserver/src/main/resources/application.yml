@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: sudoscan-deskapp
+    name: sudoscan-webserver
   router:
     static-resources:
       default:
