@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.info.*
 @OpenAPIDefinition(
     info = Info(
         title = "sudoscan-webserver",
-        version = "0.8.0"
+        version = "0.9.0"
     )
 )
 object Api
