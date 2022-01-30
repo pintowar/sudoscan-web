@@ -13,8 +13,12 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        name = "SudoscanLibs"
-        url = uri("https://pintowar.jfrog.io/artifactory/sudoscan-libs-release")
+        name = "GitHubPackages"
+        setUrl("https://maven.pkg.github.com/pintowar/sudoscan")
+        credentials {
+            username = project.findProperty("gpr.user")?.toString() ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.pass")?.toString() ?: System.getenv("GITHUB_TOKEN")
+        }
     }
 }
 

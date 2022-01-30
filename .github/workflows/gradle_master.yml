@@ -67,7 +67,7 @@ jobs:
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
           gradle-version: wrapper
-          arguments: -Pweb-cli clean release dockerPushNative -x test -Prelease.useAutomaticVersion=true
+          arguments: -Pweb-cli clean release dockerPush -x test -Prelease.useAutomaticVersion=true
 
   release:
     name: Create Release Tag
