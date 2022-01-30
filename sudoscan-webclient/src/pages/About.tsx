@@ -31,8 +31,8 @@ export const About = () => {
                 <h2 className="text-3xl leading-normal">Recognizers</h2>
                 <ul className="space-y-2 mt-4">
                     <li>
-                        <a href="https://deeplearning4j.org/" target="_blank" rel="noreferrer">
-                            <img src="https://deeplearning4j.org/images/logo.png" 
+                        <a href="https://deeplearning4j.konduit.ai/" target="_blank" rel="noreferrer">
+                            <img src="https://www.netguru.com/hs-fs/hubfs/dl4j.png?width=368&name=dl4j.png"
                                 alt="DeepLearning4j" title="DeepLearning4j" style={imgStyle} className="object-scale-down"/>
                         </a>
                     </li>
