@@ -23,8 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
-          java-version: 17
-          java-package: 'jre-focal'
+          java-version: '17'
 
       - name: Running gradle task
         uses: gradle/gradle-build-action@v2
