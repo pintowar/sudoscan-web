@@ -33,6 +33,7 @@ tasks {
             val origin = project(":sudoscan-webclient").buildDir.absolutePath
             val dest = "${project(":sudoscan-webserver").buildDir.absolutePath}/resources/main/public"
             logger.quiet("Cli Resources: copy from $origin to $dest")
+            mkdir(dest)
             copy {
                 from(origin)
                 into(dest)

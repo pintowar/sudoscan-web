@@ -1,7 +1,6 @@
 import Libs.AwtColorFactory.implementAwtColorFactory
 import Libs.Micronaut.implementMicronautWeb
 import Libs.Sudoscan.implementSudoscan
-import groovy.json.JsonOutput
 
 plugins {
     id("sudoscan.kotlin-app")
