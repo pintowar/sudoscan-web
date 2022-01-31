@@ -44,7 +44,7 @@ tasks {
     )
 
     dockerfile {
-        baseImage("adoptopenjdk/openjdk11:x86_64-alpine-jre-11.0.14_9")
+        baseImage("amd64/eclipse-temurin:17-jre-focal")
     }
 
     dockerBuild {
