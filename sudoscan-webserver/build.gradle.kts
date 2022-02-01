@@ -6,6 +6,7 @@ plugins {
     id("sudoscan.kotlin-app")
     id("io.micronaut.application")
     id("com.github.johnrengelman.shadow")
+    id("application")
 }
 
 description = "Sudoscan Web Server"
@@ -61,6 +62,15 @@ tasks {
     if (project.hasProperty("web-cli")) {
         processResources {
             dependsOn(":copyClientResources")
+
+            doLast {
+                val destParent = "${project.buildDir.absolutePath}/resources/main"
+                val dest = "$destParent/public"
+                logger.quiet("ls -la $destParent")
+                logger.quiet("ls -la $destParent".runCommand(project.projectDir))
+                logger.quiet("ls -la $dest")
+                logger.quiet("ls -la $dest".runCommand(project.projectDir))
+            }
         }
     }
 }

@@ -43,11 +43,6 @@ tasks {
                 from(origin)
                 into(dest)
             }
-
-            logger.quiet("ls -la $destParent")
-            logger.quiet("ls -la $destParent".runCommand(project.projectDir))
-            logger.quiet("ls -la $dest")
-            logger.quiet("ls -la $dest".runCommand(project.projectDir))
         }
     }
 }
