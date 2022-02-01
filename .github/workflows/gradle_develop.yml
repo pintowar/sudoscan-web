@@ -32,3 +32,9 @@ jobs:
         with:
           gradle-version: wrapper
           arguments: -Pweb-cli clean assembleWebApp
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: sudoscan_dev_web_jars
+          path: build/*.jar
