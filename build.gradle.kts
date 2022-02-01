@@ -24,22 +24,6 @@ tasks {
             logger.quiet("JAR generated at $rootDir/build/. It combines the server and client projects.")
         }
     }
-
-    register("copyClientResources") {
-        dependsOn(":sudoscan-webclient:build")
-        group = "build"
-        description = "Copy client resources into server"
-        doLast {
-            val origin = project(":sudoscan-webclient").buildDir.absolutePath
-            val dest = "${project(":sudoscan-webserver").buildDir.absolutePath}/resources/main/public"
-            logger.quiet("Cli Resources: copy from $origin to $dest")
-            mkdir(dest)
-            copy {
-                from(origin)
-                into(dest)
-            }
-        }
-    }
 }
 
 release {

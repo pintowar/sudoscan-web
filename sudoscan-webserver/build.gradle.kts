@@ -60,7 +60,18 @@ tasks {
 
     if (project.hasProperty("web-cli")) {
         processResources {
-            dependsOn(":copyClientResources")
+            val webCli = ":sudoscan-webclient"
+            dependsOn("$webCli:build")
+
+            doLast {
+                val origin = project(webCli).buildDir.absolutePath
+                val dest = "${project.buildDir.absolutePath}/resources/main/public"
+                copy {
+                    from(origin)
+                    into(dest)
+                }
+                logger.quiet("Cli Resources: move from $origin to $dest")
+            }
         }
     }
 }
