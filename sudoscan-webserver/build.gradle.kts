@@ -61,21 +61,15 @@ tasks {
 
     if (project.hasProperty("web-cli")) {
         processResources {
-//            dependsOn(":copyClientResources")
-            dependsOn(":sudoscan-webclient:build")
+            val webCli = ":sudoscan-webclient"
+            dependsOn("$webCli:build")
 
             doLast {
-                val origin = project(":sudoscan-webclient").buildDir.absolutePath
-                val destParent = "${project.buildDir.absolutePath}/resources/main"
-                val dest = "$destParent/public"
+                val origin = project(webCli).buildDir.absolutePath
+                val dest = "${project.buildDir.absolutePath}/resources/main/public"
                 ant.withGroovyBuilder {
                     "move"("file" to origin, "todir" to dest)
                 }
-
-                logger.quiet("ls -la $destParent")
-                logger.quiet("ls -la $destParent".runCommand(project.projectDir))
-                logger.quiet("ls -la $dest")
-                logger.quiet("ls -la $dest".runCommand(project.projectDir))
             }
         }
     }
