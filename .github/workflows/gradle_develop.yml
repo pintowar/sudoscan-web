@@ -31,4 +31,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           gradle-version: wrapper
-          arguments: -Pweb-cli clean shadowJar
+          arguments: -Pweb-cli clean assembleWebApp
