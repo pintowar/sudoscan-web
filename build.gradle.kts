@@ -31,13 +31,19 @@ tasks {
         description = "Copy client resources into server"
         doLast {
             val origin = project(":sudoscan-webclient").buildDir.absolutePath
-            val dest = "${project(":sudoscan-webserver").buildDir.absolutePath}/resources/main/public"
+            val destParent = "${project(":sudoscan-webserver").buildDir.absolutePath}/resources/main"
+            val dest = "$destParent/public"
             logger.quiet("Cli Resources: copy from $origin to $dest")
             mkdir(dest)
             copy {
                 from(origin)
                 into(dest)
             }
+
+            logger.quiet("ls -la $destParent")
+            logger.quiet("ls -la $destParent".runCommand(project.projectDir))
+            logger.quiet("ls -la $dest")
+            logger.quiet("ls -la $dest".runCommand(project.projectDir))
         }
     }
 }
