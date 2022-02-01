@@ -66,8 +66,8 @@ tasks {
 
             doLast {
 //                val origin = project(":sudoscan-webclient").buildDir.absolutePath
-//                val destParent = "${project.buildDir.absolutePath}/resources/main"
-//                val dest = "$destParent/public"
+                val destParent = "${project.buildDir.absolutePath}/resources/main"
+                val dest = "$destParent/public"
 //                mkdir(dest)
 //                copy {
 //                    from(origin)
