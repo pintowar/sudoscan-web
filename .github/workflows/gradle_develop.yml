@@ -25,13 +25,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Running gradle task
-        uses: gradle/gradle-build-action@v2
+#      - name: Running gradle task
+#        uses: gradle/gradle-build-action@v2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          gradle-version: wrapper
+#          arguments: -Pweb-cli clean assembleWebApp
+
+      - name: Execute Gradle build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          gradle-version: wrapper
-          arguments: -Pweb-cli clean assembleWebApp
+        run: ./gradlew build
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
