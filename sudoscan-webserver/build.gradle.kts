@@ -61,18 +61,18 @@ tasks {
 
     if (project.hasProperty("web-cli")) {
         processResources {
-//            dependsOn(":copyClientResources")
-            dependsOn(":sudoscan-webclient:build")
+            dependsOn(":copyClientResources")
+//            dependsOn(":sudoscan-webclient:build")
 
             doLast {
-                val origin = project(":sudoscan-webclient").buildDir.absolutePath
-                val destParent = "${project.buildDir.absolutePath}/resources/main"
-                val dest = "$destParent/public"
-                mkdir(dest)
-                copy {
-                    from(origin)
-                    into(dest)
-                }
+//                val origin = project(":sudoscan-webclient").buildDir.absolutePath
+//                val destParent = "${project.buildDir.absolutePath}/resources/main"
+//                val dest = "$destParent/public"
+//                mkdir(dest)
+//                copy {
+//                    from(origin)
+//                    into(dest)
+//                }
 
                 logger.quiet("ls -la $destParent")
                 logger.quiet("ls -la $destParent".runCommand(project.projectDir))
