@@ -22,6 +22,10 @@ tasks {
             }
 
             logger.quiet("JAR generated at $rootDir/build/. It combines the server and client projects.")
+            logger.quiet("ls -la ${project(":sudoscan-webserver").buildDir}/libs/")
+            logger.quiet("ls -la ${project(":sudoscan-webserver").buildDir}/libs/".runCommand(project.projectDir))
+            logger.quiet("ls -la $rootDir/build/")
+            logger.quiet("ls -la $rootDir/build/".runCommand(project.projectDir))
         }
     }
 
