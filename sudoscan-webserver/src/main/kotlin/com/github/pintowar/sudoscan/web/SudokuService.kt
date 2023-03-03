@@ -1,8 +1,8 @@
 package com.github.pintowar.sudoscan.web
 
-import com.github.pintowar.sudoscan.api.engine.SudokuEngine
-import com.github.pintowar.sudoscan.api.spi.Recognizer
-import com.github.pintowar.sudoscan.api.spi.Solver
+import io.github.pintowar.sudoscan.api.engine.SudokuEngine
+import io.github.pintowar.sudoscan.api.spi.Recognizer
+import io.github.pintowar.sudoscan.api.spi.Solver
 import io.micronaut.context.annotation.Context
 import mu.KLogging
 

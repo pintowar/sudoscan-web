@@ -75,6 +75,7 @@ tasks {
 val hasDjl = project.hasProperty("djl")
 val hasOjalgo = project.hasProperty("ojalgo")
 dependencies {
+    implementation(libs.sudoscan.cv.opencv)
     implementation(if (hasOjalgo) libs.sudoscan.solver.ojalgo else libs.sudoscan.solver.choco)
     implementation(if (hasDjl) libs.sudoscan.recognizer.djl else libs.sudoscan.recognizer.dl4j)
 

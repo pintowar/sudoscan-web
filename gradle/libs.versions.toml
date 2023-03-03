@@ -12,7 +12,7 @@ logback = "1.2.3"
 
 awt-color-factory = "1.0.2"
 javacv = "1.5.6"
-sudoscan = "1.0.0"
+sudoscan = "1.1.0-SNAPSHOT"
 
 [libraries]
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -42,10 +42,11 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
-sudoscan-solver-ojalgo = { module = "com.github.pintowar:sudoscan-solver-ojalgo", version.ref = "sudoscan" }
-sudoscan-solver-choco = { module = "com.github.pintowar:sudoscan-solver-choco", version.ref = "sudoscan" }
-sudoscan-recognizer-djl = { module = "com.github.pintowar:sudoscan-recognizer-djl", version.ref = "sudoscan" }
-sudoscan-recognizer-dl4j = { module = "com.github.pintowar:sudoscan-recognizer-dl4j", version.ref = "sudoscan" }
+sudoscan-cv-opencv = { module = "io.github.pintowar:sudoscan-cv-opencv", version.ref = "sudoscan" }
+sudoscan-solver-ojalgo = { module = "io.github.pintowar:sudoscan-solver-ojalgo", version.ref = "sudoscan" }
+sudoscan-solver-choco = { module = "io.github.pintowar:sudoscan-solver-choco", version.ref = "sudoscan" }
+sudoscan-recognizer-djl = { module = "io.github.pintowar:sudoscan-recognizer-djl", version.ref = "sudoscan" }
+sudoscan-recognizer-dl4j = { module = "io.github.pintowar:sudoscan-recognizer-dl4j", version.ref = "sudoscan" }
 
 awt-color-factory = { module = "org.beryx:awt-color-factory", version.ref = "awt-color-factory" }
 

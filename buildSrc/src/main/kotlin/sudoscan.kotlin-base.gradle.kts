@@ -12,14 +12,7 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        name = "GitHubPackages"
-        setUrl("https://maven.pkg.github.com/pintowar/sudoscan")
-        credentials {
-            username = project.findProperty("gpr.user")?.toString() ?: System.getenv("GITHUB_ACTOR")
-            password = project.findProperty("gpr.pass")?.toString() ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
+    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 //val libs = the<LibrariesForLibs>()
