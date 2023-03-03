@@ -1,7 +1,3 @@
-import Libs.AwtColorFactory.implementAwtColorFactory
-import Libs.Micronaut.implementMicronautWeb
-import Libs.Sudoscan.implementSudoscan
-
 plugins {
     id("sudoscan.kotlin-app")
     id("io.micronaut.application")
@@ -79,10 +75,18 @@ tasks {
 val hasDjl = project.hasProperty("djl")
 val hasOjalgo = project.hasProperty("ojalgo")
 dependencies {
-    implementSudoscan(hasDjl, hasOjalgo)
-    implementMicronautWeb()
+    implementation(if (hasOjalgo) libs.sudoscan.solver.ojalgo else libs.sudoscan.solver.choco)
+    implementation(if (hasDjl) libs.sudoscan.recognizer.djl else libs.sudoscan.recognizer.dl4j)
 
-    implementAwtColorFactory()
+    kapt(libs.micronaut.openapi)
+    implementation(libs.micronaut.kotlin)
+    implementation(libs.swagger)
+    implementation(libs.annotation.api)
+
+    compileOnly(libs.graalvm)
+    runtimeOnly(libs.jackson.kotlin)
+
+    implementation(libs.awt.color.factory)
 }
 
 application {
