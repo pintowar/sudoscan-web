@@ -4,7 +4,8 @@ import Webcam from "react-webcam";
 import { EngineInfoLabel } from "../components/EngineInfoLabel";
 
 export const WebCamStream = () => {
-    const host = process.env.NODE_ENV !== "production" ? process.env.REACT_APP_WS_PROXY : window.location.host
+    const host = !import.meta.env.PROD ? import.meta.env.VITE_WS_PROXY : window.location.host
+
     const wsUrl = `ws://${host}/ws/sudoku`
     const [socket, setSocket] = useState(new WebSocket(wsUrl))
     const [isConnected, setConnected] = useState(false)

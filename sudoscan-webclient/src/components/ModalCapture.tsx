@@ -76,7 +76,7 @@ export const ModalCapture = (props: ModalCaptureProps) => {
                         </ul>
                         <div className="flex flex-col justify-center items-center mx-auto h-auto">
                             {tab === Tab.DnD && 
-                                <Dropzone onDrop={onDrop} multiple={false} accept={"image/*"} >
+                                <Dropzone onDrop={onDrop} multiple={false} >
                                     {({getRootProps, getInputProps}) => (
                                     <div {...getRootProps()} className="p-40">
                                         <input {...getInputProps()} />

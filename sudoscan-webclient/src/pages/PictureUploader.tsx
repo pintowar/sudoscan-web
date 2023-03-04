@@ -24,10 +24,12 @@ export const PictureUploader = () => {
     const [imgStyle, setImgStyle] = useState({width: `${imgWidth}px`, height: `${imgHeight}px`})
 
     useEffect(() => {
-        const initSample  = ["./sudoku01.jpg", "./sudoku02.jpg"];
-        Promise.all(initSample.map(urlToBase64Image)).then(img =>
-            setSampleImages(prev => prev.concat(img))
-        )
+        const init = async () => {
+            const initSample  = ["./sudoku01.jpg", "./sudoku02.jpg"];
+            const imgs = await Promise.all(initSample.map(urlToBase64Image))
+            setSampleImages(imgs);
+        };
+        init();
     }, []);
 
     const clean = () => {

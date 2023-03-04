@@ -1,27 +1,26 @@
-import com.github.gradle.node.yarn.task.YarnTask
+import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
     id("com.github.node-gradle.node")
 }
 
-project.buildDir = file("build")
+project.buildDir = file("dist")
 
 node {
-    version.set("12.16.3")
-    yarnVersion.set("1.22.4")
+    version.set("16.19.1")
     download.set(true)
 }
 
 tasks {
-    register<YarnTask>("run") {
-        dependsOn("yarn")
+    register<NpmTask>("run") {
+        dependsOn(npmInstall)
         group = "application"
         description = "Run the client app"
-        args.set(listOf("run", "start"))
+        args.set(listOf("run", "dev"))
     }
 
-    register<YarnTask>("build") {
-        dependsOn("yarn")
+    register<NpmTask>("build") {
+        dependsOn(npmInstall)
         group = "build"
         description = "Build the client bundle"
         args.set(listOf("run", "build"))

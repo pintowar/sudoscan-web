@@ -1,5 +1,5 @@
 [versions]
-micronaut-gradle = "3.7.2"
+micronaut-gradle = "3.7.3"
 kotest-gradle = "0.3.9"
 git-gradle = "2.4.0"
 
@@ -56,4 +56,3 @@ annotation-api = { module = "javax.annotation:javax.annotation-api" }
 micronaut-openapi = { module = "io.micronaut.openapi:micronaut-openapi" }
 micronaut-kotlin = { module = "io.micronaut.kotlin:micronaut-kotlin-runtime" }
 graalvm = { module = "org.graalvm.nativeimage:svm" }
-
