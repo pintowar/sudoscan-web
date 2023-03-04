@@ -72,12 +72,12 @@ tasks {
     }
 }
 
-val hasDjl = project.hasProperty("djl")
+val hasDl4j = project.hasProperty("dl4j")
 val hasOjalgo = project.hasProperty("ojalgo")
 dependencies {
     implementation(libs.sudoscan.cv.opencv)
     implementation(if (hasOjalgo) libs.sudoscan.solver.ojalgo else libs.sudoscan.solver.choco)
-    implementation(if (hasDjl) libs.sudoscan.recognizer.djl else libs.sudoscan.recognizer.dl4j)
+    implementation(if (hasDl4j) libs.sudoscan.recognizer.dl4j else libs.sudoscan.recognizer.djl)
 
     kapt(libs.micronaut.openapi)
     implementation(libs.micronaut.kotlin)

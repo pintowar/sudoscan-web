@@ -51,8 +51,8 @@ To build a more optimized jar, just inform the desired platform, for instance:
 `gradle -Pweb-cli -PjavacppPlatform=linux-x86_64 clean assembleWebApp`
 
 It is also possible to chose in compile time, which solver/recognizer module to use. The commands above (by default)
-will generate a jar using **sudoscan-solver-choco** and **sudoscan-recognizer-dl4j** as the main solver and recognizer.
-To use **sudoscan-solver-ojalgo** and **sudoscan-recognizer-djl** as solver and recognizer components,
+will generate a jar using **sudoscan-solver-choco** and **sudoscan-recognizer-djl** as the main solver and recognizer.
+To use **sudoscan-solver-ojalgo** and **sudoscan-recognizer-dl4j** as solver and recognizer components,
 run the following command:
 
-`gradle -Pweb-cli -Pojalgo -Pdjl -PjavacppPlatform=macosx-x86_64 clean assembleWebApp`
+`gradle -Pweb-cli -Pojalgo -Pdl4j -PjavacppPlatform=macosx-x86_64 clean assembleWebApp`
